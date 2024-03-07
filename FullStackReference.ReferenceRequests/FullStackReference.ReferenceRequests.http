@@ -1,0 +1,6 @@
+@FullStackReference.ReferenceRequests_HostAddress = http://localhost:5198
+
+GET {{FullStackReference.ReferenceRequests_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
