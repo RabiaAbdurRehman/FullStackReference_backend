@@ -1,0 +1,6 @@
+@FullStackReference.Service.PostingAPI_HostAddress = http://localhost:5212
+
+GET {{FullStackReference.Service.PostingAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
