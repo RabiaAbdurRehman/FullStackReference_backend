@@ -10,15 +10,15 @@ namespace PostingAPI.Models.Dto
         public int PostingDetailsId { get; set; }
         [ForeignKey("PostingId")]
         public int PostingId { get; set; }
-      
-        public int ?LikeStatus { get; set; }
-        public string ?ShareStatus { get; set; }
+
+        public int? LikeStatus { get; set; }
+        public string? ShareStatus { get; set; }
         public DateTime EntryDate { get; set; }
         public String UserId { get; set; }
-        public String Comments { get; set; }
-        
+        public String? Comments { get; set; }
+
         public Posting? Posting { get; set; }
-       // public PostingUser? PostinguserIdentity { get; set; }
+        // public PostingUser? PostinguserIdentity { get; set; }
 
 
 
