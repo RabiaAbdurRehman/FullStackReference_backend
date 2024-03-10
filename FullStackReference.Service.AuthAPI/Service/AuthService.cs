@@ -43,6 +43,7 @@ namespace FullStackReference.Service.AuthAPI.Service
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+            var user2 = _db.ApplicationUsers.ToListAsync();
 
             bool isValid = await _userManager.CheckPasswordAsync(user,loginRequestDto.Password);
 
@@ -60,7 +61,8 @@ namespace FullStackReference.Service.AuthAPI.Service
                 Email = user.Email,
                 ID = user.Id,
                 Name = user.Name,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Role = roles[0]
             };
 
             LoginResponseDto loginResponseDto = new LoginResponseDto()
@@ -116,20 +118,55 @@ namespace FullStackReference.Service.AuthAPI.Service
         }
 
         public async Task<AllUserDto> UserInfo()
-        { 
-           var users = await (from user2 in _db.Users
+        {
+            //UserDto userDTO;
+            IEnumerable<AllUserDto> objList;
+            AllUserDto user_w = new();
+
+          var  objList2 = await (from user2 in _db.Users
                                join userRole in _db.UserRoles
                                on user2.Id equals userRole.UserId
                                join role in _db.Roles
                                on userRole.RoleId equals role.Id
-                               select new 
+                               select new AllUserDto
                                {
-                                   UserName = user2.UserName,
-                                   Id = user2.Id,
+                                   Name = user2.Name,
+                                   ID = user2.Id,
                                    Email = user2.Email,
-                                   Role = role.Name
+                                   Role = role.Name,
+                                   PhoneNumber=user2.PhoneNumber
                                }).ToListAsync();
-            
+
+
+            //var user3 = await _db.ApplicationRoles.ToListAsync();
+            //string roleAssign = "";
+            //foreach (var user in user3) {
+            //    var roles = await _userManager.GetRolesAsync(user);
+            //    if(roles.Any())
+            //    {
+            //        foreach(var role in roles)
+            //        {
+            //            roleAssign = roleAssign + ",";
+            //        }
+            //    }
+            //     userDTO = new()
+            //    {
+            //        Email = user.Email,
+            //        ID = user.Id,
+            //        Name = user.Name,
+            //        PhoneNumber = user.PhoneNumber,
+            //        Role = roleAssign
+            //    };
+
+            //}
+
+
+            //var users2 = await _db.AspNetUsers
+            //             .Include(x => x.AspNetUserRoles)
+            //             .ThenInclude(x => x.AspNetRoles)
+            //             .AsNoTracking()
+            //              .ToListAsync();
+
             //foreach (var user in users)
             //{
             //    allUserDtos.Role = user.UserName;
@@ -171,7 +208,7 @@ namespace FullStackReference.Service.AuthAPI.Service
             //    Token = ""
             //};
 
-            return null;
+            return null ;
         }
     }
 }
