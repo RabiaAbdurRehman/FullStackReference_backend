@@ -5,15 +5,16 @@ namespace PostingAPI.Models.Dto
 {
     public class PostingDto
     {
-
-
         public int PostingId { get; set; }
         required
-        public string UserId{ get; set; }
+        public string UserId
+        { get; set; }
         required
-        public string PostContent{ get; set; }
+        public string PostContent
+        { get; set; }
         required
-        public DateTime PostingDate { get; set; }
+        public DateTime PostingDate
+        { get; set; }
         public int? DeletionFlag { get; set; }
         [NotMapped]
         public IEnumerable<PostingDetailsDto>? PostDetails { get; set; }
