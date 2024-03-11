@@ -4467,11 +4467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
+      "projectUniqueName": "/home/rabia/comIt/FullStackReference_backend/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
       "projectName": "FullStackReference.ReferenceRequests",
-      "projectPath": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
+      "projectPath": "/home/rabia/comIt/FullStackReference_backend/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
       "packagesPath": "/home/rabia/.nuget/packages/",
-      "outputPath": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/obj/",
+      "outputPath": "/home/rabia/comIt/FullStackReference_backend/FullStackReference.ReferenceRequests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/rabia/.nuget/NuGet/NuGet.Config"

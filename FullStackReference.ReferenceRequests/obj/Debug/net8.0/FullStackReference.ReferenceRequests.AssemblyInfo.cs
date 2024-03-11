@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FullStackReference.ReferenceRequests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5710e9c2173f08805652c928853b083aca7bafad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6140a80f254496d8dbadfdb35b9fc0cf48a28ad5")]
 [assembly: System.Reflection.AssemblyProductAttribute("FullStackReference.ReferenceRequests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FullStackReference.ReferenceRequests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

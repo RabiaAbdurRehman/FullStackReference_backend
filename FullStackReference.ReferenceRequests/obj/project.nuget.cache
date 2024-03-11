@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TMK/qkoUIt+XhXbNdUUtl1Gj2RRnQ5/MQNFecjvYkQFTOdP6Gyh+bUaXeBu6sfWcQYRWr6rzle3k6Q9UuI51DQ==",
+  "dgSpecHash": "sIWIk+VfbLX26TmU8Aca19WD8JScjKLS4y7cKrTDCrg4jAJm2PEwZtYTQ01WlG9vDcTj5zcc91VJZyWUNoIUjA==",
   "success": true,
-  "projectFilePath": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
+  "projectFilePath": "/home/rabia/comIt/FullStackReference_backend/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
   "expectedPackageFiles": [
     "/home/rabia/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/home/rabia/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.0/automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
