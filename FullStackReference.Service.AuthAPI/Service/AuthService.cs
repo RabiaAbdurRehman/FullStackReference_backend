@@ -1,8 +1,10 @@
-﻿using FullStackReference.Service.AuthAPI.Data;
+﻿using Azure;
+using FullStackReference.Service.AuthAPI.Data;
 using FullStackReference.Service.AuthAPI.Models;
 using FullStackReference.Service.AuthAPI.Models.Dto;
 using FullStackReference.Service.IService;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FullStackReference.Service.AuthAPI.Service
@@ -117,30 +119,58 @@ namespace FullStackReference.Service.AuthAPI.Service
             return "Error Encountered";
         }
 
-        public async Task<AllUserDto> UserInfo()
+        public async Task<string> UserInfo()
         {
-            //UserDto userDTO;
-            IEnumerable<AllUserDto> objList;
+
+           // var odel = await _db.ApplicationUsers.Include(x => x.UserRoles).ThenInclude(x=>x.Role).ToListAsync();
+            // var user = _db.ApplicationUsers.ToList();
+           
+
+
             AllUserDto user_w = new();
 
-          var  objList2 = await (from user2 in _db.Users
-                               join userRole in _db.UserRoles
-                               on user2.Id equals userRole.UserId
-                               join role in _db.Roles
-                               on userRole.RoleId equals role.Id
-                               select new AllUserDto
-                               {
-                                   Name = user2.Name,
-                                   ID = user2.Id,
-                                   Email = user2.Email,
-                                   Role = role.Name,
-                                   PhoneNumber=user2.PhoneNumber
-                               }).ToListAsync();
+            var objList2 = await (from user2 in _db.Users
+                                  join userRole in _db.UserRoles
+                                  on user2.Id equals userRole.UserId
+                                  join role in _db.Roles
+                                  on userRole.RoleId equals role.Id
+                                  select new AllUserDto
+                                  {
+                                      Name = user2.Name,
+                                      ID = user2.Id,
+                                      Email = user2.Email,
+                                      Role = role.Name,
+                                      PhoneNumber = user2.PhoneNumber
+                                  }).ToListAsync();
+            //foreach (var obj in objList2)
+            //{
+            //    user_w=new AllUserDto()
+            //    {
+            //        Name = obj.Name,
+            //        ID = obj.ID,
+            //        Email = obj.Email,
+            //        Role = obj.Role,
+            //        PhoneNumber = obj.PhoneNumber
+            //    };
+            //}
 
+            //var users = await _userManager.Users
+            //                      .Include(r => r.UserRoles)
+            //                      .ThenInclude(r => r.Role)
+            //                      // .OrderBy(u => u.UserName)
+            //                      .Select(u => new
+            //                      {
+            //                          // u.Id,
+            //                          Username = u.UserName,
+            //                          Name = u.Name,
+            //                          Role = u.UserRoles.Select(r => r.Role.Name).ToList()
+            //                      })
+            //                      .ToListAsync();
+
+            return "";
 
             //var user3 = await _db.ApplicationRoles.ToListAsync();
             //string roleAssign = "";
-            //foreach (var user in user3) {
             //    var roles = await _userManager.GetRolesAsync(user);
             //    if(roles.Any())
             //    {
@@ -208,7 +238,7 @@ namespace FullStackReference.Service.AuthAPI.Service
             //    Token = ""
             //};
 
-            return null ;
+            //return null ;
         }
     }
 }

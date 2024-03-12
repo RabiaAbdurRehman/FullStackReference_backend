@@ -1,8 +1,10 @@
 ﻿
+using FullStackReference.Service.AuthAPI.Data;
 using FullStackReference.Service.AuthAPI.Models.Dto;
 using FullStackReference.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FullStackReference.Service.AuthAPI.Controllers
 {
@@ -14,8 +16,10 @@ namespace FullStackReference.Service.AuthAPI.Controllers
         //private readonly IMessageBus _messageBus;
         private readonly IConfiguration _configuration;
         protected ResponseDto _response;
-        public AuthAPIController(IAuthService authService, IConfiguration configuration)
+        private readonly AppDbContext _db;
+        public AuthAPIController(IAuthService authService, IConfiguration configuration, AppDbContext db)
         {
+            _db = db;
             _authService = authService;
             _configuration = configuration;
            // _messageBus = messageBus;
@@ -67,14 +71,29 @@ namespace FullStackReference.Service.AuthAPI.Controllers
         [HttpGet("AllUsers")]
         public async Task<IActionResult> AllUsers()
         {
-            var loginResponse = await _authService.UserInfo();
+            var odel = await _db.ApplicationUsers.Include(x => x.UserRoles).ThenInclude(x => x.Role).ToListAsync();
+            var objList2 = await (from user2 in _db.Users
+                                  join userRole in _db.UserRoles
+                                  on user2.Id equals userRole.UserId
+                                  join role in _db.Roles
+                                  on userRole.RoleId equals role.Id
+                                  select new AllUserDto
+                                  {
+                                      Name = user2.Name,
+                                      ID = user2.Id,
+                                      Email = user2.Email,
+                                      Role = role.Name,
+                                      PhoneNumber = user2.PhoneNumber
+                                  }).ToListAsync();
+            var loginResponse = _authService.UserInfo();
+            
             //if (loginResponse.User == null)
             //{
             //    _response.IsSuccess = false;
             //    _response.Message = "User";
             //    //return BadRequest(_response);
             //}
-            _response.Result = loginResponse;
+            _response.Result = objList2;
             return Ok(_response);
 
         }
