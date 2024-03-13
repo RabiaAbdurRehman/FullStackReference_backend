@@ -9,3 +9,5 @@ namespace PostingAPI.Data
         public ICollection<PostingDetails> Comments { get; set; }
     }
 }
+
+// Just For test Commit
