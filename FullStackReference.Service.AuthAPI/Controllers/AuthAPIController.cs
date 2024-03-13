@@ -44,7 +44,7 @@ namespace FullStackReference.Service.AuthAPI.Controllers
             // await _messageBus.PublishMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
             _response.Message = "User Created Successfully";
             _response.Result = "Success";
-            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+           // var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
             //if (!assignRoleSuccessful)
             //{
             //    _response.IsSuccess = false;
@@ -71,7 +71,7 @@ namespace FullStackReference.Service.AuthAPI.Controllers
         [HttpGet("AllUsers")]
         public async Task<IActionResult> AllUsers()
         {
-            var odel = await _db.ApplicationUsers.Include(x => x.UserRoles).ThenInclude(x => x.Role).ToListAsync();
+            //var odel = await _db.ApplicationUsers.Include(x => x.UserRoles).ThenInclude(x => x.Role).ToListAsync();
             var objList2 = await (from user2 in _db.Users
                                   join userRole in _db.UserRoles
                                   on user2.Id equals userRole.UserId
@@ -98,19 +98,19 @@ namespace FullStackReference.Service.AuthAPI.Controllers
 
         }
 
-        //[HttpPost("AssignRole")]
-        //public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
-        //{
-        //    var assignRoleSuccessful = await _authService.AssignRole(model.Email,model.Role.ToUpper());
-        //    if (!assignRoleSuccessful)
-        //    {
-        //        _response.IsSuccess = false;
-        //        _response.Message = "Error encountered";
-        //        return BadRequest(_response);
-        //    }
-        //    return Ok(_response);
+        [HttpPost("AssignRole")]
+        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
+        {
+            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+            if (!assignRoleSuccessful)
+            {
+                _response.IsSuccess = false;
+                _response.Message = "Error encountered";
+                return BadRequest(_response);
+            }
+            return Ok(_response);
 
-        //}
+        }
 
 
     }

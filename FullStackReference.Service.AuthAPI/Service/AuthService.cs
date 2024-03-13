@@ -28,17 +28,27 @@ namespace FullStackReference.Service.AuthAPI.Service
         public async Task<bool> AssignRole(string email, string roleName)
         {
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
-            if (user != null)
+            try
             {
-                if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+
+
+                if (user != null)
                 {
-                    //create role if it does not exist
-                    _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                    if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                    {
+                        //create role if it does not exist
+                        _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                    }
+                    await _userManager.AddToRoleAsync(user, roleName);
+                   
                 }
-                await _userManager.AddToRoleAsync(user, roleName);
                 return true;
             }
-            return false;
+            catch (Exception ex)
+            {
+                return false;
+            }
+           
 
         }
 
@@ -129,7 +139,7 @@ namespace FullStackReference.Service.AuthAPI.Service
 
             AllUserDto user_w = new();
 
-            var objList2 = await (from user2 in _db.Users
+           /* var objList2 = await (from user2 in _db.Users
                                   join userRole in _db.UserRoles
                                   on user2.Id equals userRole.UserId
                                   join role in _db.Roles
@@ -141,7 +151,7 @@ namespace FullStackReference.Service.AuthAPI.Service
                                       Email = user2.Email,
                                       Role = role.Name,
                                       PhoneNumber = user2.PhoneNumber
-                                  }).ToListAsync();
+                                  }).ToListAsync(); */
             //foreach (var obj in objList2)
             //{
             //    user_w=new AllUserDto()
