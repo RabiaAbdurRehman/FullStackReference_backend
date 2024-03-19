@@ -11,7 +11,7 @@ namespace PostingAPI
             var mappingConfig = new MapperConfiguration(config =>
             {
                 config.CreateMap<PostingDto, Posting>().ReverseMap();
-                //config.CreateMap<PostingDetailsDto,PostingDetails>().ReverseMap();
+                config.CreateMap<PostingDetailsDto,PostingDetails>().ReverseMap();
                 config.CreateMap<PostInsertDto, Posting>().ReverseMap();
 
             });

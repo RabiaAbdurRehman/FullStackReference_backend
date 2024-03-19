@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FullStackReference.Service.AuthAPI.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser,Role,String,IdentityUserClaim<string>,
-        UserRole,IdentityUserLogin<string>,IdentityRoleClaim<string>,IdentityUserToken<string>>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -28,7 +27,7 @@ namespace FullStackReference.Service.AuthAPI.Data
             //modelBuilder.Entity<ApplicationUser>(x =>
             //{
             //    x.HasMany(e => e.UserRoles)
-            //    .WithOne(e => e.ApplicationUser)
+            //    .WithOne(e =>e.User)
             //    .HasForeignKey(ur => ur.UserId)
             //    .IsRequired();
             //});

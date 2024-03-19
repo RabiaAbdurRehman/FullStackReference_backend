@@ -12,8 +12,8 @@ using PostingAPI.Data;
 namespace PostingAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240303201332_AddPostingTable")]
-    partial class AddPostingTable
+    [Migration("20240313191929_PostinGAPITable")]
+    partial class PostinGAPITable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace PostingAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostingDetailsId"));
 
                     b.Property<string>("Comments")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EntryDate")

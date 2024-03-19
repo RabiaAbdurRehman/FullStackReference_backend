@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using AutoMapper;
 using PostingAPI;
+using PostingAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,11 @@ builder.Services.AddSingleton(mapper);
 IServiceCollection serviceCollection = builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services
+// Service API added for User info
+builder.Services.AddScoped<IUserAuthservice, UserAuthService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient("UsersInfo", u => u.BaseAddress =
+new Uri(builder.Configuration["ServiceUrls:UserAuthAPI"]));
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

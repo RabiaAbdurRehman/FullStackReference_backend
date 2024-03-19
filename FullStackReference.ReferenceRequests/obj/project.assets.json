@@ -4467,11 +4467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\comITTraning\\ComIT-TeamUp\\ComIt_FullStackReference_Backend_latest\\FullStackReference_backend\\FullStackReference.ReferenceRequests\\FullStackReference.ReferenceRequests.csproj",
+      "projectUniqueName": "/home/rabia/comIt/FullStackReference_backend/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
       "projectName": "FullStackReference.ReferenceRequests",
-      "projectPath": "C:\\comITTraning\\ComIT-TeamUp\\ComIt_FullStackReference_Backend_latest\\FullStackReference_backend\\FullStackReference.ReferenceRequests\\FullStackReference.ReferenceRequests.csproj",
-      "packagesPath": "C:\\Users\\mahbuba\\.nuget\\packages\\",
-      "outputPath": "C:\\comITTraning\\ComIT-TeamUp\\ComIt_FullStackReference_Backend_latest\\FullStackReference_backend\\FullStackReference.ReferenceRequests\\obj\\",
+      "projectPath": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/FullStackReference.ReferenceRequests.csproj",
+      "packagesPath": "/home/rabia/.nuget/packages/",
+      "outputPath": "/home/rabia/comIt/ComItTeam-CohortWebAPI/FullStackReference.ReferenceRequests/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mahbuba\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PostingAPI.Data;
 using PostingAPI.Models;
 using PostingAPI.Models.Dto;
+using PostingAPI.Service;
 
 namespace PostingAPI.Controllers
 {
@@ -17,17 +18,21 @@ namespace PostingAPI.Controllers
         private readonly AppDbContext _db;
         private ResponseDto _response;
         private IMapper _mapper;
-        public PostingAPIController(AppDbContext db, IMapper mapper)
+        // For User Services
+        private IUserAuthservice _userAuthservice;
+
+        public PostingAPIController(AppDbContext db, IMapper mapper, IUserAuthservice userAuthservice)
         {
             _db = db;
             _mapper = mapper;
             _response = new ResponseDto();
+            _userAuthservice = userAuthservice;
         }
         
 
         [HttpGet]
         // public async ResponseDto Get()
-        public ResponseDto? Get()
+        public async Task<ResponseDto>? Get()
         {
             IEnumerable<Posting> objList;
             try
@@ -36,7 +41,9 @@ namespace PostingAPI.Controllers
                 //_response.Result = _mapper.Map<IEnumerable<PostingDto>>(objList);
                 // var cusomter = await _db.Posting
                 //    .Include(_ => _.PostingDetails).ToListAsync();
-                objList= _db.Posting.Include(p=>p.PostDetails).ToList();
+                IEnumerable<UserAuthDto> userAuthDtos = await _userAuthservice.GetUsersInfo() ;
+                objList = _db.Posting.Include(p => p.PostDetails).ToList();
+                
                 _response.Result = _mapper.Map<IEnumerable<Posting>>(objList);
                // return Ok(_response);
             }
@@ -53,8 +60,10 @@ namespace PostingAPI.Controllers
         public ResponseDto Get(int id)
         {
             IEnumerable<Posting> objList;
+           
             try
             {
+               
                 //objList = _db.Posting.First(u => u.PostingId == id).Include(p => p.PostDetails).ToList();
                 objList = _db.Posting.Include(p => p.PostDetails).Where(_=>_.PostingId==id).ToList();
                 _response.Result = _mapper.Map<IEnumerable<Posting>>(objList);
@@ -94,6 +103,7 @@ namespace PostingAPI.Controllers
             try
             {
                 //OrderHeader orderHeader = _db.OrderHeaders.First(u => u.OrderHeaderId == orderId);
+               
                 Posting posting = _db.Posting.FirstOrDefault(u => u.PostingId == postingDetailsDto.PostingId);
                 if(posting != null)
                 {

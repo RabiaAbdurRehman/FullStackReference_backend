@@ -1,6 +1,7 @@
 ﻿using PostingAPI.Data;
 using PostingAPI.Models.Dto;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PostingAPI.Models
 {
@@ -16,8 +17,8 @@ namespace PostingAPI.Models
         public DateTime PostingDate { get; set; }
         public int ?DeletionFlag  { get; set; }
         public IEnumerable<PostingDetails>? PostDetails { get; set; }
-       // public ICollection<PostingUser>? PostUser { get; set; }
-        //public List<PostingDetails> PostingDetails { get; set; }
+        [NotMapped]
+        public UserAuthDto? userAuthDto { get; set; }
 
     }
 }

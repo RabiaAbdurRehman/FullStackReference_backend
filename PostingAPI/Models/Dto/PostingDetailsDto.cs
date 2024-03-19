@@ -12,5 +12,6 @@ namespace PostingAPI.Models.Dto
         public DateTime EntryDate { get; set; }
         public String UserId { get; set; }
         public String? Comments { get; set; }
+        public UserAuthDto? userAuthDto { get; set; }
     }
 }
