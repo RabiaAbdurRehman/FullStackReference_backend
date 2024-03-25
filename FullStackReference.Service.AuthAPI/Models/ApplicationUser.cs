@@ -5,7 +5,9 @@ namespace FullStackReference.Service.AuthAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Specialization { get; set; }
         //[NotMapped]
         //public virtual ICollection<UserRole> UserRoles { get; set; }
     }

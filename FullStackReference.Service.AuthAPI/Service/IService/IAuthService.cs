@@ -8,9 +8,12 @@ namespace FullStackReference.Service.IService
         Task<string> Register(RegistrationRequestDto registrationRequestDto);
         Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
         Task<bool> AssignRole(string email, string roleName);
-        //AllUserDto UserInfo();
-        Task<String> UserInfo();
-        
+      
+        Task<String> UserInfo(string UserId);
+        Task<bool> UpdateUserInfo(UserDto updateRequestDto);
+        Task<bool> DeleteUser(string userid);
+        Task<bool> UpdatePassword(string userid, string currentPasswd, string newPassword);
+
 
     }
 }

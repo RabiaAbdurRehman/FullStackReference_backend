@@ -7,8 +7,6 @@ namespace PostingAPI.Models.Dto
     {
         public int PostingId { get; set; }
         required
-       
-      
         public string PostContent { get; set; }
         required
         public DateTime PostingDate { get; set; }

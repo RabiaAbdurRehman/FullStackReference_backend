@@ -12,8 +12,8 @@ using PostingAPI.Data;
 namespace PostingAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240313191929_PostinGAPITable")]
-    partial class PostinGAPITable
+    [Migration("20240323213832_PostingDbAdded")]
+    partial class PostingDbAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

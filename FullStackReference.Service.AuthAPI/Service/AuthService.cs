@@ -3,9 +3,11 @@ using FullStackReference.Service.AuthAPI.Data;
 using FullStackReference.Service.AuthAPI.Models;
 using FullStackReference.Service.AuthAPI.Models.Dto;
 using FullStackReference.Service.IService;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace FullStackReference.Service.AuthAPI.Service
 {
@@ -30,8 +32,6 @@ namespace FullStackReference.Service.AuthAPI.Service
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
             try
             {
-
-
                 if (user != null)
                 {
                     if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
@@ -41,6 +41,7 @@ namespace FullStackReference.Service.AuthAPI.Service
                     }
                     await _userManager.AddToRoleAsync(user, roleName);
                    
+
                 }
                 return true;
             }
@@ -48,14 +49,42 @@ namespace FullStackReference.Service.AuthAPI.Service
             {
                 return false;
             }
-           
+        }
 
+        public async Task<bool> DeleteUser(string userid)
+        {
+            bool status=false;
+            try
+            {
+               // var user = _db.ApplicationUsers.FirstOrDefault(u => u.Id.ToLower() == userid);
+                var user = await _userManager.FindByIdAsync(userid);
+                //var roles = _userManager.GetRolesAsync(user);
+                //var result = await _userManager.RemoveFromRolesAsync(user, (IEnumerable<string>)roles);
+                if (user!=null)
+                {
+                    var resultdelete = await _userManager.DeleteAsync(user);
+                    if (resultdelete.Succeeded)
+                    {
+                        status = true;
+                    }
+                   
+                }
+                return status;
+
+
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
         }
 
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
-            var user2 = _db.ApplicationUsers.ToListAsync();
+           // var user2 = _db.ApplicationUsers.ToListAsync();
 
             bool isValid = await _userManager.CheckPasswordAsync(user,loginRequestDto.Password);
 
@@ -67,12 +96,14 @@ namespace FullStackReference.Service.AuthAPI.Service
             //if user was found , Generate JWT Token
             var roles = await _userManager.GetRolesAsync(user);
             var token = _jwtTokenGenerator.GenerateToken(user,roles);
+           
 
             UserDto userDTO = new()
             {
-                Email = user.Email,
                 ID = user.Id,
-                Name = user.Name,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 Role = roles[0]
             };
@@ -93,23 +124,25 @@ namespace FullStackReference.Service.AuthAPI.Service
                 UserName = registrationRequestDto.Email,
                 Email = registrationRequestDto.Email,
                 NormalizedEmail = registrationRequestDto.Email.ToUpper(),
-                Name = registrationRequestDto.Name,
-                PhoneNumber = registrationRequestDto.PhoneNumber
-               
-          };
+                FirstName = registrationRequestDto.FirstName,
+                LastName = registrationRequestDto.LastName,
+                PhoneNumber = registrationRequestDto.PhoneNumber,
+            };
 
             try
             {
                 var result =await  _userManager.CreateAsync(user,registrationRequestDto.Password);
                 if (result.Succeeded)
                 {
+                    await AssignRole(registrationRequestDto.Email, "Normal");
                     var userToReturn = _db.ApplicationUsers.First(u => u.UserName == registrationRequestDto.Email);
 
                     UserDto userDto = new()
                     {
                         Email = userToReturn.Email,
                         ID = userToReturn.Id,
-                        Name = userToReturn.Name,
+                        FirstName = userToReturn.FirstName,
+                        LastName = userToReturn.LastName,
                         PhoneNumber = userToReturn.PhoneNumber,
                     };
 
@@ -129,7 +162,63 @@ namespace FullStackReference.Service.AuthAPI.Service
             return "Error Encountered";
         }
 
-        public async Task<string> UserInfo()
+        public async  Task<bool> UpdatePassword(string userid, string currentPasswd,string newPassword)
+        {
+            bool status = false;
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userid);
+                if (user != null)
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, currentPasswd, newPassword);
+                    if (result.Succeeded)
+                    {
+                        status = true;
+                    }
+
+                }
+            }
+            catch
+            { status = false; }
+            return status;  
+            
+        }
+
+        public async Task<bool> UpdateUserInfo(UserDto updateRequestDto)
+        {
+            bool status = false;
+            var userToReturn = _db.ApplicationUsers.First(u => u.Id == updateRequestDto.ID);
+           // var user = await _userManager.FindByIdAsync(id);
+            try
+            {
+                if (userToReturn != null)
+                {
+                    userToReturn.Email = updateRequestDto.Email;
+                    userToReturn.NormalizedEmail = updateRequestDto.Email.ToUpper();
+                    userToReturn.FirstName = updateRequestDto.FirstName;
+                    userToReturn.LastName = updateRequestDto.LastName;
+                    userToReturn.PhoneNumber = updateRequestDto.PhoneNumber;
+                    var result = await _userManager.UpdateAsync(userToReturn);
+                    if (result.Succeeded)
+                    {
+                        status= true;
+                    }
+                    else
+                    {
+                        status= false;
+                    }
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                status= false;
+            }
+
+            return status;
+        }
+
+        public async Task<string> UserInfo(string UserId)
         {
 
            // var odel = await _db.ApplicationUsers.Include(x => x.UserRoles).ThenInclude(x=>x.Role).ToListAsync();

@@ -16,9 +16,11 @@ namespace PostingAPI.Models
         required
         public DateTime PostingDate { get; set; }
         public int ?DeletionFlag  { get; set; }
+        [NotMapped]
         public IEnumerable<PostingDetails>? PostDetails { get; set; }
         [NotMapped]
-        public UserAuthDto? userAuthDto { get; set; }
+        public virtual IEnumerable<UserAuthDto>? userdto { get; set; }
+        //public List<PostingDetails> PostingDetails { get; set; }
 
     }
 }

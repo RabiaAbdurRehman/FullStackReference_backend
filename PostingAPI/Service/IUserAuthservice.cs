@@ -4,6 +4,6 @@ namespace PostingAPI.Service
 {
     public interface IUserAuthservice
     {
-        Task<IEnumerable<UserAuthDto>> GetUsersInfo();
+        Task<IEnumerable<UserAuthDto>> GetUsersInfo(string UserId);
     }
 }

@@ -19,7 +19,7 @@ namespace PostingAPI.Models.Dto
         public Posting? Posting { get; set; }
         // public PostingUser? PostinguserIdentity { get; set; }
         [NotMapped]
-        public UserAuthDto? userAuthDto { get; set; }
+        public virtual IEnumerable<UserAuthDto>? userdtoDetails { get; set; }
 
 
 

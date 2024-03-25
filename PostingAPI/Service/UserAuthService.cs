@@ -11,12 +11,12 @@ namespace PostingAPI.Service
             _httpClientFactory = clientFactory;
         }
 
-        public async Task<IEnumerable<UserAuthDto>> GetUsersInfo()
+        public async Task<IEnumerable<UserAuthDto>> GetUsersInfo(string UserId)
         {
             try
             {
                 var client = _httpClientFactory.CreateClient("UsersInfo");
-                var response = await client.GetAsync($"api/auth/AllUsers");
+                var response = await client.GetAsync($"api/auth/AllUsers/{UserId}");
                 var apiContet = await response.Content.ReadAsStringAsync();
                 var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContet);
                 if (resp.IsSuccess)
